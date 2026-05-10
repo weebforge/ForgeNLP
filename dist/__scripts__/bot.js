@@ -9,7 +9,16 @@ const client = new forgescript_1.ForgeClient({
     token: process.env.Token,
     intents: ["MessageContent", "GuildMessages", "Guilds"],
     events: ["messageCreate", "clientReady"],
-    extensions: [new ForgeNLP_1.ForgeNLP()],
+    extensions: [
+        new ForgeNLP_1.ForgeNLP({
+            wordDataset: [
+                {
+                    type: "local",
+                    src: { path: "dataset/words.txt" },
+                },
+            ],
+        }),
+    ],
 });
 client.commands.add({
     name: "ping",
