@@ -16,4 +16,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./ForgeNLP"), exports);
 __exportStar(require("./natural"), exports);
+__exportStar(require("./structures"), exports);
 //# sourceMappingURL=index.js.map
