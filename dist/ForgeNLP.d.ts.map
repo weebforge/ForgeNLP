@@ -1,0 +1,1 @@
+{"version":3,"file":"ForgeNLP.d.ts","sourceRoot":"","sources":["../src/ForgeNLP.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,cAAc,EAAE,MAAM,uBAAuB,CAAA;AAGnE,qBAAa,QAAS,SAAQ,cAAc;IACnC,IAAI,EAAE,MAAM,CAAc;IAC1B,WAAW,EAAE,MAAM,CAAyC;IAC5D,OAAO,EAAE,MAAM,CAAqC;IAEpD,IAAI,CAAC,MAAM,EAAE,WAAW,GAAG,IAAI;CAGvC"}
