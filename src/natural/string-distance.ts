@@ -19,12 +19,6 @@ export interface DamerauLevenshteinDistanceOptions {
   restricted?: boolean
 }
 
-export interface SubstringDistanceResult {
-  substring: string
-  distance: number
-  offset: number
-}
-
 export enum StringDistanceAlgorithm {
   Hamming = "Hamming",
   Levenshtein = "Levenshtein",
@@ -63,6 +57,10 @@ function validateStrings(str1: string, str2: string) {
 }
 
 export const StringDistance = {
+  /**
+   * Hamming distance measures the distance between two strings of equal length by counting the number of different characters. The third parameter indicates whether case should be ignored. By default the algorithm is case sensitive.
+   * @see https://en.wikipedia.org/wiki/Hamming_distance
+   */
   Hamming(str1: string, str2: string, ignoreCase = false): number {
     validateStrings(str1, str2)
 
@@ -73,24 +71,40 @@ export const StringDistance = {
     return HammingDistance(str1, str2, ignoreCase)
   },
 
+  /**
+   * The Levenshtein distance is a string metric for measuring the difference between two sequences. The Levenshtein distance between two words is the minimum number of single-character edits (insertions, deletions or substitutions) required to change one word into the other.
+   * @see https://en.wikipedia.org/wiki/Levenshtein_distance
+   */
   Levenshtein(str1: string, str2: string, options?: DamerauLevenshteinDistanceOptions): number {
     validateStrings(str1, str2)
 
     return LevenshteinDistance(str1, str2, options)
   },
 
+  /**
+   * the Damerau–Levenshtein distance is a string metric for measuring the edit distance between two sequences. Informally, the Damerau–Levenshtein distance between two words is the minimum number of operations (consisting of insertions, deletions or substitutions of a single character, or transposition of two adjacent characters) required to change one word into the other.
+   * @see https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+   */
   DamerauLevenshtein(str1: string, str2: string, options?: DamerauLevenshteinDistanceOptions): number {
     validateStrings(str1, str2)
 
     return DamerauLevenshteinDistance(str1, str2, options)
   },
 
+  /**
+   * The Jaro–Winkler string distance measuring algorithm will return a number between 0 and 1 which tells how closely the strings match (0 = not at all, 1 = exact match).
+   * @see http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
+   */
   JaroWinkler(str1: string, str2: string, options?: JaroWinklerOptions): number {
     validateStrings(str1, str2)
 
     return JaroWinklerDistance(str1, str2, options)
   },
 
+  /**
+   * The Dice-Sørensen coefficient is a statistic used to gauge the similarity of two samples.
+   * @see https://en.wikipedia.org/wiki/Dice-S%C3%B8rensen_coefficient
+   */
   DiceCoefficient(str1: string, str2: string): number {
     validateStrings(str1, str2)
 

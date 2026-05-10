@@ -9,11 +9,6 @@ export interface DamerauLevenshteinDistanceOptions {
     transposition_cost?: number;
     restricted?: boolean;
 }
-export interface SubstringDistanceResult {
-    substring: string;
-    distance: number;
-    offset: number;
-}
 export declare enum StringDistanceAlgorithm {
     Hamming = "Hamming",
     Levenshtein = "Levenshtein",
