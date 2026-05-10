@@ -1,1 +1,1 @@
-{"StringDistanceAlgorithm":["Hamming","Levenshtein","DamerauLevenshtein","JaroWinkler","DiceCoefficient"]}
+{"StringDistanceAlgorithm":["Hamming","Levenshtein","DamerauLevenshtein","JaroWinkler","DiceCoefficient"],"WordsCountFilterProperty":["all","alpha","nonAlpha","length","initial","src"]}

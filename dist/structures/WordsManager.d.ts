@@ -26,12 +26,12 @@ export declare class WordsManager {
     static getWord(word: string): WordData[] | null;
     static getWordCount(word: string): number;
     static getAllWords(): string[];
-    static hasWord(word: string): boolean;
+    static hasWord(word: string, src?: WordDatasetSource<WordDatasetSourceType> | string): boolean;
     static getWordsOfLength(length: number): string[];
     static getWordsWithInitials(initial: string): string[];
     static getAlphaWords(): string[];
     static getNonAlphaWords(): string[];
-    static getWordsBySource(src: WordDatasetSource<WordDatasetSourceType>): string[];
+    static getWordsBySource(src: WordDatasetSource<WordDatasetSourceType> | string): string[];
     static findWord(predicate: (word: string, entries: WordData[]) => boolean): string | null;
     static findWords(predicate: (word: string, entries: WordData[]) => boolean): string[];
     static saveAsTXT(path: string, words?: string[]): Promise<void>;

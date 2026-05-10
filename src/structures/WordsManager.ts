@@ -110,8 +110,12 @@ export class WordsManager {
     return Array.from(this.Words.keys())
   }
 
-  static hasWord(word: string): boolean {
-    return this.Words.has(word)
+  static hasWord(word: string, src?: WordDatasetSource<WordDatasetSourceType> | string): boolean {
+    return src
+      ? typeof src == "string"
+        ? (this.#srcMap.get(src)?.includes(word) ?? false)
+        : this.getWordsBySource(src).includes(word)
+      : this.Words.has(word)
   }
 
   static getWordsOfLength(length: number): string[] {
@@ -131,8 +135,8 @@ export class WordsManager {
     return [...this.#nonAlpha]
   }
 
-  static getWordsBySource(src: WordDatasetSource<WordDatasetSourceType>): string[] {
-    return [...(this.#srcMap.get(this.#getSourceKey(src)) ?? [])]
+  static getWordsBySource(src: WordDatasetSource<WordDatasetSourceType> | string): string[] {
+    return [...(this.#srcMap.get(typeof src == "object" ? this.#getSourceKey(src) : src) ?? [])]
   }
 
   static findWord(predicate: (word: string, entries: WordData[]) => boolean): string | null {

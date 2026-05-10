@@ -82,8 +82,12 @@ class WordsManager {
     static getAllWords() {
         return Array.from(this.Words.keys());
     }
-    static hasWord(word) {
-        return this.Words.has(word);
+    static hasWord(word, src) {
+        return src
+            ? typeof src == "string"
+                ? (this.#srcMap.get(src)?.includes(word) ?? false)
+                : this.getWordsBySource(src).includes(word)
+            : this.Words.has(word);
     }
     static getWordsOfLength(length) {
         return [...(this.#lengthMaps.get(length) ?? [])];
@@ -99,7 +103,7 @@ class WordsManager {
         return [...this.#nonAlpha];
     }
     static getWordsBySource(src) {
-        return [...(this.#srcMap.get(this.#getSourceKey(src)) ?? [])];
+        return [...(this.#srcMap.get(typeof src == "object" ? this.#getSourceKey(src) : src) ?? [])];
     }
     static findWord(predicate) {
         for (const [word, entries] of this.Words.entries()) {
