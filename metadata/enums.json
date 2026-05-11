@@ -1,1 +1,1 @@
-{"StringDistanceAlgorithm":["Hamming","Levenshtein","DamerauLevenshtein","JaroWinkler","DiceCoefficient"],"TokenizerType":["Word","Sentence","TreebankWord","RegExp","WordPunct","Case"],"WordsCountFilterProperty":["all","alpha","nonAlpha","length","initial","src"]}
+{"StringDistanceAlgorithm":["Hamming","Levenshtein","DamerauLevenshtein","JaroWinkler","DiceCoefficient"],"TokenizerType":["Word","Sentence","TreebankWord","RegExp","WordPunct","Case"],"WordDatasetSrcType":["github","local"],"WordsCountFilterProperty":["all","alpha","nonAlpha","length","initial","src"]}
