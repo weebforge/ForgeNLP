@@ -1,11 +1,23 @@
 import { ForgeClient, ForgeExtension } from "@tryforge/forgescript"
 import { join } from "node:path"
-import { WordDatasetSource, WordDatasetSourceType } from "./structures"
-import { WordsManager } from "./structures/WordsManager"
+import {
+  WordDatasetSource,
+  WordDatasetSourceType,
+  BayesClassifierManager,
+  TrainingData,
+  WordsManager,
+} from "./structures"
+
+export interface PredefinedClassifier {
+  name: string
+  modelPath?: string
+  trainingData?: TrainingData[]
+}
 
 export interface IForgeNLPOptions {
   wordDataset: WordDatasetSource<WordDatasetSourceType>[]
   loadDefaults?: boolean
+  classifiers?: PredefinedClassifier[]
 }
 
 export class ForgeNLP extends ForgeExtension {
@@ -20,6 +32,7 @@ export class ForgeNLP extends ForgeExtension {
     this.options = {
       wordDataset: opts.wordDataset || [],
       loadDefaults: opts.loadDefaults ?? false,
+      classifiers: opts.classifiers || [],
     }
   }
 
@@ -40,6 +53,27 @@ export class ForgeNLP extends ForgeExtension {
         }
       } catch (e) {
         console.error("Failed to load default word datasets:", e)
+      }
+    }
+
+    if (this.options.classifiers?.length) {
+      for (const classifierDef of this.options.classifiers) {
+        if (!BayesClassifierManager.exists(classifierDef.name)) {
+          BayesClassifierManager.create(classifierDef.name)
+        }
+
+        if (classifierDef.modelPath) {
+          const loaded = await BayesClassifierManager.loadClassifier(classifierDef.name, classifierDef.modelPath)
+          if (!loaded) {
+            console.error(`Failed to load classifier ${classifierDef.name} from ${classifierDef.modelPath}`)
+          }
+        } else if (classifierDef.trainingData?.length) {
+          try {
+            BayesClassifierManager.train(classifierDef.name, classifierDef.trainingData)
+          } catch (e) {
+            console.error(`Failed to train classifier ${classifierDef.name}:`, e)
+          }
+        }
       }
     }
   }

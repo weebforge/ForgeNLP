@@ -14,7 +14,13 @@ const client = new forgescript_1.ForgeClient({
             wordDataset: [
                 {
                     type: "local",
-                    src: { path: "dataset/words.txt" },
+                    src: { path: "dataset/words_alpha.txt" },
+                },
+            ],
+            classifiers: [
+                {
+                    name: "eatOrSleep",
+                    modelPath: ".test-classifer.json",
                 },
             ],
         }),
