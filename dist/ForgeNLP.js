@@ -5,7 +5,7 @@ const forgescript_1 = require("@tryforge/forgescript");
 const node_path_1 = require("node:path");
 const structures_1 = require("./structures");
 class ForgeNLP extends forgescript_1.ForgeExtension {
-    name = "ForgeMath";
+    name = "ForgeNLP";
     description = require("../package.json").description;
     version = require("../package.json").version;
     options;

@@ -21,7 +21,7 @@ export interface IForgeNLPOptions {
 }
 
 export class ForgeNLP extends ForgeExtension {
-  public name: string = "ForgeMath"
+  public name: string = "ForgeNLP"
   public description: string = require("../package.json").description
   public version: string = require("../package.json").version
 
