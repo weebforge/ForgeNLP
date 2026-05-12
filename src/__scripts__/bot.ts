@@ -13,7 +13,19 @@ const client = new ForgeClient({
       wordDataset: [
         {
           type: "local",
-          src: { path: "dataset/words.txt" },
+          src: { path: "dataset/words_alpha.txt" },
+        },
+      ],
+      classifiers: [
+        {
+          name: "eatOrSleep",
+          // trainingData: [
+          //   { label: "eat", text: ["i want to eat", "i'm hungry", "let's have dinner", "food sounds good"] },
+          //   { label: "eat", text: ["i like apples", "pizza time", "craving chocolate", "breakfast please"] },
+          //   { label: "sleep", text: ["its night time", "i'm tired", "time for bed", "feeling sleepy"] },
+          //   { label: "sleep", text: ["goodnight", "need rest", "tossing and turning", "can't stay awake"] },
+          // ],
+          modelPath: ".test-classifer.json",
         },
       ],
     }),
