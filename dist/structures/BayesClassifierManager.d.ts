@@ -15,6 +15,7 @@ export interface ClassifierInstance {
     trained: boolean;
     trainingDataCount: number;
     lastTrained: Date | null;
+    labels: string[];
 }
 export declare class BayesClassifierManager {
     private static classifiers;
@@ -40,6 +41,7 @@ export declare class BayesClassifierManager {
         trainingDataCount: number;
         lastTrained: Date | null;
     }>;
+    static getLabels(name: string): string[] | null;
     static getClassifier(name: string): BayesClassifier | null;
 }
 //# sourceMappingURL=BayesClassifierManager.d.ts.map

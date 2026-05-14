@@ -48,6 +48,7 @@ class BayesClassifierManager {
             trained: false,
             trainingDataCount: 0,
             lastTrained: null,
+            labels: [],
         });
         return true;
     }
@@ -75,10 +76,12 @@ class BayesClassifierManager {
             return false;
         instance.classifier = new natural_1.BayesClassifier();
         let totalDocuments = 0;
+        const labelsSet = new Set();
         for (const item of data) {
             const texts = Array.isArray(item.text) ? item.text : [item.text];
             for (const text of texts) {
                 instance.classifier.addDocument(text, item.label);
+                labelsSet.add(item.label);
                 totalDocuments++;
             }
         }
@@ -86,6 +89,7 @@ class BayesClassifierManager {
         instance.trained = true;
         instance.trainingDataCount = totalDocuments;
         instance.lastTrained = new Date();
+        instance.labels = Array.from(labelsSet);
         return true;
     }
     static addDocument(name, text, label) {
@@ -93,6 +97,9 @@ class BayesClassifierManager {
         if (!instance)
             return false;
         instance.classifier.addDocument(text, label);
+        if (!instance.labels.includes(label)) {
+            instance.labels.push(label);
+        }
         instance.trained = false;
         instance.trainingDataCount++;
         return true;
@@ -169,6 +176,7 @@ class BayesClassifierManager {
                 trained: true,
                 trainingDataCount: 0,
                 lastTrained: new Date(),
+                labels: [],
             });
             return true;
         }
@@ -185,6 +193,7 @@ class BayesClassifierManager {
         instance.trained = false;
         instance.trainingDataCount = 0;
         instance.lastTrained = null;
+        instance.labels = [];
         return true;
     }
     static getStatistics() {
@@ -197,6 +206,12 @@ class BayesClassifierManager {
             };
         }
         return stats;
+    }
+    static getLabels(name) {
+        const instance = this.classifiers.get(name);
+        if (!instance || !instance.trained)
+            return null;
+        return instance.labels;
     }
     static getClassifier(name) {
         const instance = this.classifiers.get(name);

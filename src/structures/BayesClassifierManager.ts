@@ -18,6 +18,7 @@ export interface ClassifierInstance {
   trained: boolean
   trainingDataCount: number
   lastTrained: Date | null
+  labels: string[]
 }
 
 export class BayesClassifierManager {
@@ -38,6 +39,7 @@ export class BayesClassifierManager {
       trained: false,
       trainingDataCount: 0,
       lastTrained: null,
+      labels: [],
     })
 
     return true
@@ -88,12 +90,14 @@ export class BayesClassifierManager {
     instance.classifier = new BayesClassifier()
 
     let totalDocuments = 0
+    const labelsSet = new Set<string>()
 
     // Add training documents
     for (const item of data) {
       const texts = Array.isArray(item.text) ? item.text : [item.text]
       for (const text of texts) {
         instance.classifier.addDocument(text, item.label)
+        labelsSet.add(item.label)
         totalDocuments++
       }
     }
@@ -103,6 +107,7 @@ export class BayesClassifierManager {
     instance.trained = true
     instance.trainingDataCount = totalDocuments
     instance.lastTrained = new Date()
+    instance.labels = Array.from(labelsSet)
 
     return true
   }
@@ -115,6 +120,9 @@ export class BayesClassifierManager {
     if (!instance) return false
 
     instance.classifier.addDocument(text, label)
+    if (!instance.labels.includes(label)) {
+      instance.labels.push(label)
+    }
     instance.trained = false // Mark as needing retraining
     instance.trainingDataCount++
     return true
@@ -220,6 +228,7 @@ export class BayesClassifierManager {
         trained: true,
         trainingDataCount: 0, // We don't know the original count
         lastTrained: new Date(),
+        labels: [],
       })
 
       return true
@@ -240,6 +249,7 @@ export class BayesClassifierManager {
     instance.trained = false
     instance.trainingDataCount = 0
     instance.lastTrained = null
+    instance.labels = []
     return true
   }
 
@@ -272,6 +282,16 @@ export class BayesClassifierManager {
     }
 
     return stats
+  }
+
+  /**
+   * Get all labels for a trained classifier
+   */
+  static getLabels(name: string): string[] | null {
+    const instance = this.classifiers.get(name)
+    if (!instance || !instance.trained) return null
+
+    return instance.labels
   }
 
   /**
